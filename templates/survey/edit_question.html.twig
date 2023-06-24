@@ -1,0 +1,72 @@
+{# templates/question/edit.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edytuj pytanie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-left: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select,
+        input[type="number"] {
+            width: 300px;
+            padding: 6px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Edytuj pytanie</h1>
+
+<form action="{{ path('question_edit', {'surveyId': question.surveyId, 'questionId': question.id}) }}" method="post">
+
+    <input type="hidden" name="_method" value="PUT">
+
+    <label for="content">Treść pytania:</label>
+    <input type="text" id="content" name="content" value="{{ question.content }}" required>
+
+    <label for="type">Typ pytania:</label>
+    <select id="type" name="type" required>
+        <option value="multiple_choice" {% if question.type == 'multiple_choice' %}selected{% endif %}>Wielokrotnego wyboru</option>
+        <option value="single_choice" {% if question.type == 'checkbox' %}selected{% endif %}>Pole wyboru</option>
+    </select>
+
+    <label for="position">Pozycja:</label>
+    <input type="number" id="position" name="position" value="{{ question.position }}" min="1" required>
+
+    <button type="submit">Zapisz zmiany</button>
+</form>
+</body>
+</html>

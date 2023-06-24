@@ -1,0 +1,80 @@
+controllers:
+    resource: '../src/Controller/'
+    type: annotation
+
+index:
+    path: /
+    controller: App\Controller\SurveyController::index
+
+survey_edit:
+    path: /survey/edit/{id}
+    controller: App\Controller\SurveyController::edit
+    methods: [GET, POST]
+
+survey_delete:
+    path: /survey/delete/{id}
+    controller: App\Controller\SurveyController::delete
+    methods: [GET]
+
+survey_create:
+    path: /survey/create
+    controller: App\Controller\SurveyController::createSurvey
+    methods: [GET, POST]
+
+survey_questions:
+    path: /survey/questions/{id}
+    controller: App\Controller\SurveyController::questions
+
+#question_options:
+#    path: /survey/questions/{id}/options
+#    controller: App\Controller\SurveyController::options
+#    methods: GET
+#    requirements:
+#        id: \d+
+
+question_delete:
+    path: /survey/questions/{id}/delete
+    controller: App\Controller\SurveyController::delete
+    methods: GET
+    requirements:
+        id: \d+
+
+question_create:
+    path: /survey/question-create/{id}
+    controller: App\Controller\SurveyController::createQuestion
+    methods: [GET, POST]
+
+show_survey:
+    path: /survey/show/{id}
+    controller: App\Controller\SurveyController::showSurvey
+    methods: [GET]
+
+question_options:
+    path: /survey/question-options/{surveyId}/{questionId}
+    controller: App\Controller\SurveyController::questionOptions
+    methods: [GET]
+
+api_survey_get:
+    path: /api/v1/survey/{id}
+    controller: App\Controller\ApiSurveyController::getSurvey
+    methods: GET
+
+api_survey_questions_get:
+    path: /api/v1/survey-questions/{id}
+    controller: App\Controller\ApiSurveyController::getSurveyQuestions
+    methods: GET
+
+api_survey_question_options_get:
+    path: /api/v1/survey-questions-options/{surveyId}/{questionId}
+    controller: App\Controller\ApiSurveyController::getSurveyQuestionOptions
+    methods: GET
+
+edit_option:
+    path: /survey/question-option-edit/{surveyId}/{questionId}/{optionId}
+    controller: App\Controller\SurveyController::editOption
+
+delete_option:
+    path: /survey/delete-option/{surveyId}/{questionId}/{optionId}
+    controller: App\Controller\SurveyController::deleteOption
+
+

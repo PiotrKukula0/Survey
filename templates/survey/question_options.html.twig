@@ -1,0 +1,95 @@
+{# templates/question/options.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Opcje odpowiedzi na pytanie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-left: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4a90e2;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .add-option {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            font-size: 16px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Opcje odpowiedzi na pytanie</h1>
+
+<p>Pytanie: {{ question.content }}</p>
+
+{% if options is empty %}
+    <p>Brak dostępnych opcji odpowiedzi.</p>
+{% else %}
+    <table>
+        <thead>
+        <tr>
+            <th>Wartość</th>
+            <th>Treść</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for option in options %}
+            <tr>
+                <td>{{ option.value }}</td>
+                <td>{{ option.content }}</td>
+                <td>
+                    <a href="{{ path('edit_option', {'surveyId': surveyId, 'questionId': question.id, 'optionId': option.id}) }}">Edytuj</a>
+                    <a href="{{ path('delete_option', {'surveyId': surveyId, 'questionId': question.id, 'optionId': option.id}) }}">Usuń</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<a href="{{ path('create_option', {'surveyId': surveyId, 'questionId': question.id}) }}" class="add-option">Dodaj nową opcję odpowiedzi</a>
+
+</body>
+</html>

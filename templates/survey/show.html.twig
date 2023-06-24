@@ -1,0 +1,112 @@
+{# templates/survey/show.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Badanie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .question {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-content {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .option input[type="checkbox"],
+        .option input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .option label {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+{% if survey %}
+    <h1>{{ survey.name }}</h1>
+    <p>Status: {{ survey.status }}</p>
+    {% if status == 'testowanie' %}
+        <p>ID: {{ survey.id }}</p>
+    {% endif %}
+    {% for question in questions %}
+        <div class="question">
+            <h2 class="question-content">Pytanie {{ loop.index }}:</h2>
+            <p>{{ question.content }}</p>
+            {% if status == 'testowanie' %}
+                <p>ID: {{ question.id }}</p>
+            {% endif %}
+            {% set options = question.options %}
+            {% if options|length > 0 %}
+                {% set questionId = question.id %}
+                {% set uniqueOptions = options|filter(option => option.question.id == questionId) %}
+                <div class="options">
+                    {% if question.type == 'multiple_choice' %}
+                        <p>Wybierz jedną z poniższych opcji:</p>
+                        {% for option in uniqueOptions %}
+                            <div class="option">
+                                <input type="checkbox" name="question_{{ question.id }}[]" value="{{ option.value }}">
+                                <label>{{ option.content }}</label>
+                            </div>
+                        {% endfor %}
+                    {% elseif question.type == 'single_choice' %}
+                        {% if uniqueOptions|length > 1 %}
+                            <p>Wybierz jedną z poniższych opcji:</p>
+                        {% endif %}
+                        {% for option in uniqueOptions %}
+                            <div class="option">
+                                <input type="radio" name="question_{{ question.id }}" value="{{ option.value }}">
+                                <label>{{ option.content }}</label>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <h1>Błąd 404 - Badanie nie istnieje</h1>
+{% endif %}
+</body>
+</html>

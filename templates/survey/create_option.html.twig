@@ -1,0 +1,66 @@
+{# templates/option/create.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Utwórz nową opcję odpowiedzi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-left: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 400px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            font-size: 16px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Utwórz nową opcję odpowiedzi</h1>
+
+<form action="{{ path('create_option', {'surveyId': surveyId, 'questionId': questionId}) }}" method="post">
+    <label for="optionValue">Wartość opcji:</label>
+    <input type="number" id="optionValue" name="optionValue" min="1" required>
+
+    <label for="optionText">Treść opcji:</label>
+    <textarea id="optionText" name="optionText" required></textarea>
+
+    <button type="submit">Utwórz</button>
+</form>
+</body>
+</html>
